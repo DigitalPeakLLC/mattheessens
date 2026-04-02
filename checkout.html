@@ -378,6 +378,18 @@
         </div>
     </section>
 
+    <!-- Order Confirmation Modal -->
+    <div class="modal-overlay" id="orderConfirmModal">
+        <div class="modal">
+            <div class="modal-content">
+                <div class="modal-icon">🎉</div>
+                <h2>Thanks for ordering!</h2>
+                <p>A confirmation email has been sent.</p>
+                <button class="btn btn-primary" onclick="closeConfirmAndRedirect()">Continue</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -422,7 +434,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Mattheessen's. All rights reserved. <a href="privacy.html" style="color: rgba(255,255,255,0.6); margin-left: 10px;">Privacy Policy</a></p>
+                <p>&copy; 2026 Mattheessen's. Designed in <a href="https://digitalpeakproductions.com/" target="_blank" style="color: rgba(255,255,255,0.6);">Key West</a>. All rights reserved. <a href="privacy.html" style="color: rgba(255,255,255,0.6); margin-left: 10px;">Privacy Policy</a></p>
             </div>
         </div>
     </footer>
@@ -785,6 +797,9 @@
                             orderData.transactionId = transaction.id;
                             orderData.transactionStatus = transaction.status;
                             
+                            cart = [];
+                            localStorage.setItem('mattheessensCart', JSON.stringify(cart));
+
                             return fetch('/api/send-confirmation', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
@@ -792,22 +807,13 @@
                             }).then(function(response) {
                                 return response.json();
                             }).then(function(result) {
-                                if (result.success) {
-                                    alert('Thank you for your order! Confirmation email sent to Mattsmailorder@gmail.com');
-                                } else {
+                                if (!result.success) {
                                     console.error('Email send failed:', result.error);
-                                    alert('Payment successful! Order confirmation email may be delayed.');
                                 }
-                                // Clear cart and redirect
-                                cart = [];
-                                localStorage.setItem('mattheessensCart', JSON.stringify(cart));
-                                window.location.href = 'index.html';
+                                showOrderConfirmation();
                             }).catch(function(error) {
                                 console.error('Fetch error:', error);
-                                alert('Payment successful! Order details saved.');
-                                cart = [];
-                                localStorage.setItem('mattheessensCart', JSON.stringify(cart));
-                                window.location.href = 'index.html';
+                                showOrderConfirmation();
                             });
                         });
                     },
@@ -873,6 +879,15 @@
                 shippingCost: orderShipping,
                 total: orderTotal
             };
+        }
+
+        function showOrderConfirmation() {
+            document.getElementById('orderConfirmModal').classList.add('active');
+        }
+
+        function closeConfirmAndRedirect() {
+            document.getElementById('orderConfirmModal').classList.remove('active');
+            window.location.href = 'index.html';
         }
 
         function sendTestEmail() {
