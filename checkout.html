@@ -347,7 +347,7 @@
                                 <option value="WI">Wisconsin</option>
                                 <option value="WY">Wyoming</option>
                             </select>
-                            <input type="text" id="zip" placeholder="ZIP" maxlength="5" onblur="calculateShipping()">
+                            <input type="text" id="zip" placeholder="ZIP" maxlength="5" required onblur="calculateShipping()">
                         </div>
                     </div>
 
@@ -745,6 +745,21 @@
                         }
                         
                         const orderData = getOrderData();
+
+                        var paypalItems = [];
+                        cart.forEach(function(item) {
+                            var qty = item.quantity || 1;
+                            var unitPrice = item.price.toFixed(2);
+                            if (item.type === 'bundle' || item.type === 'fudge') {
+                                qty = 1;
+                            }
+                            paypalItems.push({
+                                name: item.description ? item.name + ' (' + item.description + ')' : item.name,
+                                unit_amount: { currency_code: 'USD', value: unitPrice },
+                                quantity: String(qty),
+                                category: 'PHYSICAL_GOODS'
+                            });
+                        });
                         
                         return actions.order.create({
                             purchase_units: [{
@@ -756,7 +771,8 @@
                                         shipping: { currency_code: 'USD', value: orderShipping.toFixed(2) }
                                     }
                                 },
-                                description: `Mattheessen's Order`,
+                                items: paypalItems,
+                                description: "Mattheessen's Order",
                                 shipping: {
                                     name: { full_name: `${orderData.shipping.firstName} ${orderData.shipping.lastName}` },
                                     address: {
@@ -801,6 +817,12 @@
                             
                             cart = [];
                             localStorage.setItem('mattheessensCart', JSON.stringify(cart));
+
+                            if (transaction.status !== 'COMPLETED') {
+                                console.warn('Transaction not completed, status:', transaction.status);
+                                showOrderConfirmation();
+                                return;
+                            }
 
                             return fetch('/api/send-confirmation', {
                                 method: 'POST',

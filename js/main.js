@@ -313,6 +313,13 @@ function updateCartUI() {
     // Update total
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     if (cartTotal) cartTotal.textContent = `$${total.toFixed(2)}`;
+
+    const checkoutBtn = document.querySelector('.cart-footer .btn-full');
+    if (checkoutBtn) {
+        checkoutBtn.disabled = cart.length === 0;
+        checkoutBtn.style.opacity = cart.length === 0 ? '0.4' : '';
+        checkoutBtn.style.pointerEvents = cart.length === 0 ? 'none' : '';
+    }
 }
 
 function getItemEmoji(type) {
