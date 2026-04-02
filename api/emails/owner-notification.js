@@ -1,3 +1,5 @@
+import { esc } from "./sanitize.js";
+
 export function buildOwnerEmail(data) {
   const {
     paypalOrderId, transactionId, transactionStatus,
@@ -8,11 +10,11 @@ export function buildOwnerEmail(data) {
   const orderDate = new Date().toLocaleString("en-US", { dateStyle: "long", timeStyle: "short" });
 
   const itemRows = (items || []).map(item => {
-    const desc = item.description ? `<br><span style="color:#5C3D2E;font-size:13px;">${item.description}</span>` : "";
+    const desc = item.description ? `<br><span style="color:#5C3D2E;font-size:13px;">${esc(item.description)}</span>` : "";
     const qty = item.quantity > 1 ? ` &times; ${item.quantity}` : "";
     return `<tr>
       <td style="padding:10px 12px;border-bottom:1px solid #F5EDE4;font-family:Georgia,serif;color:#2C1810;">
-        ${item.name}${desc}${qty}
+        ${esc(item.name)}${desc}${qty}
       </td>
       <td style="padding:10px 12px;border-bottom:1px solid #F5EDE4;font-family:Georgia,serif;color:#2C1810;text-align:right;white-space:nowrap;">
         $${Number(item.price).toFixed(2)}
@@ -27,7 +29,7 @@ export function buildOwnerEmail(data) {
           <tr>
             <td style="padding:14px 16px;font-family:Georgia,serif;color:#2C1810;">
               <strong style="color:#D4A574;">&#127873; Gift Order</strong>
-              ${giftMessage ? `<br><em style="color:#5C3D2E;">"${giftMessage}"</em>` : ""}
+              ${giftMessage ? `<br><em style="color:#5C3D2E;">"${esc(giftMessage)}"</em>` : ""}
             </td>
           </tr>
         </table>
@@ -35,7 +37,7 @@ export function buildOwnerEmail(data) {
     </tr>` : "";
 
   const apartmentLine = shipping?.apartment
-    ? `${shipping.apartment}<br>` : "";
+    ? `${esc(shipping.apartment)}<br>` : "";
 
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
@@ -56,7 +58,7 @@ export function buildOwnerEmail(data) {
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="color:#D4A574;font-family:Georgia,serif;font-size:13px;">
-                  Order #${paypalOrderId}
+                  Order #${esc(paypalOrderId)}
                 </td>
                 <td style="color:#D4A574;font-family:Georgia,serif;font-size:13px;text-align:right;">
                   ${orderDate}
@@ -73,20 +75,20 @@ export function buildOwnerEmail(data) {
               <td width="50%" valign="top" style="padding-right:12px;">
                 <h3 style="margin:0 0 8px;font-family:Georgia,serif;color:#E31B23;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Customer</h3>
                 <p style="margin:0;font-family:Georgia,serif;color:#2C1810;font-size:14px;line-height:1.6;">
-                  ${customer?.name || "N/A"}<br>
-                  ${customer?.email || "N/A"}<br>
-                  ${customer?.phone || "N/A"}
+                  ${esc(customer?.name)}<br>
+                  ${esc(customer?.email)}<br>
+                  ${esc(customer?.phone)}
                 </p>
               </td>
               <td width="50%" valign="top" style="padding-left:12px;">
                 <h3 style="margin:0 0 8px;font-family:Georgia,serif;color:#E31B23;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Ship To</h3>
                 <p style="margin:0;font-family:Georgia,serif;color:#2C1810;font-size:14px;line-height:1.6;">
-                  ${shipping?.firstName || ""} ${shipping?.lastName || ""}<br>
-                  ${shipping?.address || "N/A"}<br>
-                  ${apartmentLine}${shipping?.city || "N/A"}, ${shipping?.state || "N/A"} ${shipping?.zip || "N/A"}
+                  ${esc(shipping?.firstName)} ${esc(shipping?.lastName)}<br>
+                  ${esc(shipping?.address)}<br>
+                  ${apartmentLine}${esc(shipping?.city)}, ${esc(shipping?.state)} ${esc(shipping?.zip)}
                 </p>
                 <p style="margin:6px 0 0;font-family:Georgia,serif;color:#5C3D2E;font-size:13px;">
-                  ${shippingMethod || "N/A"}
+                  ${esc(shippingMethod)}
                 </p>
               </td>
             </tr>
@@ -121,7 +123,7 @@ export function buildOwnerEmail(data) {
         <tr>
           <td style="background:#FAF6F1;padding:16px 32px;text-align:center;border-top:1px solid #F5EDE4;">
             <p style="margin:0;font-family:Georgia,serif;color:#5C3D2E;font-size:12px;">
-              Transaction ID: ${transactionId} &bull; Status: ${transactionStatus}
+              Transaction ID: ${esc(transactionId)} &bull; Status: ${esc(transactionStatus)}
             </p>
           </td>
         </tr>

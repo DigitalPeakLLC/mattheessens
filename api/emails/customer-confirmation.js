@@ -1,3 +1,5 @@
+import { esc } from "./sanitize.js";
+
 export function buildCustomerEmail(data) {
   const {
     paypalOrderId, shipping, items, isGift, giftMessage,
@@ -7,11 +9,11 @@ export function buildCustomerEmail(data) {
   const orderDate = new Date().toLocaleString("en-US", { dateStyle: "long", timeStyle: "short" });
 
   const itemRows = (items || []).map(item => {
-    const desc = item.description ? `<br><span style="color:#5C3D2E;font-size:13px;">${item.description}</span>` : "";
+    const desc = item.description ? `<br><span style="color:#5C3D2E;font-size:13px;">${esc(item.description)}</span>` : "";
     const qty = item.quantity > 1 ? ` &times; ${item.quantity}` : "";
     return `<tr>
       <td style="padding:10px 12px;border-bottom:1px solid #F5EDE4;font-family:Georgia,serif;color:#2C1810;">
-        ${item.name}${desc}${qty}
+        ${esc(item.name)}${desc}${qty}
       </td>
       <td style="padding:10px 12px;border-bottom:1px solid #F5EDE4;font-family:Georgia,serif;color:#2C1810;text-align:right;white-space:nowrap;">
         $${Number(item.price).toFixed(2)}
@@ -26,7 +28,7 @@ export function buildCustomerEmail(data) {
           <tr>
             <td style="padding:14px 16px;font-family:Georgia,serif;color:#2C1810;">
               <strong style="color:#D4A574;">&#127873; Gift Order</strong>
-              ${giftMessage ? `<br><em style="color:#5C3D2E;">"${giftMessage}"</em>` : ""}
+              ${giftMessage ? `<br><em style="color:#5C3D2E;">"${esc(giftMessage)}"</em>` : ""}
             </td>
           </tr>
         </table>
@@ -34,7 +36,7 @@ export function buildCustomerEmail(data) {
     </tr>` : "";
 
   const apartmentLine = shipping?.apartment
-    ? `${shipping.apartment}<br>` : "";
+    ? `${esc(shipping.apartment)}<br>` : "";
 
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
@@ -55,7 +57,7 @@ export function buildCustomerEmail(data) {
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="color:#D4A574;font-family:Georgia,serif;font-size:13px;">
-                  Order #${paypalOrderId}
+                  Order #${esc(paypalOrderId)}
                 </td>
                 <td style="color:#D4A574;font-family:Georgia,serif;font-size:13px;text-align:right;">
                   ${orderDate}
@@ -76,12 +78,12 @@ export function buildCustomerEmail(data) {
               <td style="padding:18px 20px;">
                 <h3 style="margin:0 0 8px;font-family:Georgia,serif;color:#E31B23;font-size:14px;text-transform:uppercase;letter-spacing:1px;">Shipping To</h3>
                 <p style="margin:0;font-family:Georgia,serif;color:#2C1810;font-size:14px;line-height:1.6;">
-                  ${shipping?.firstName || ""} ${shipping?.lastName || ""}<br>
-                  ${shipping?.address || "N/A"}<br>
-                  ${apartmentLine}${shipping?.city || "N/A"}, ${shipping?.state || "N/A"} ${shipping?.zip || "N/A"}
+                  ${esc(shipping?.firstName)} ${esc(shipping?.lastName)}<br>
+                  ${esc(shipping?.address)}<br>
+                  ${apartmentLine}${esc(shipping?.city)}, ${esc(shipping?.state)} ${esc(shipping?.zip)}
                 </p>
                 <p style="margin:8px 0 0;font-family:Georgia,serif;color:#5C3D2E;font-size:13px;">
-                  <strong>Method:</strong> ${shippingMethod || "N/A"}
+                  <strong>Method:</strong> ${esc(shippingMethod)}
                 </p>
               </td>
             </tr>
