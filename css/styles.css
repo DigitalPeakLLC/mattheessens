@@ -1885,7 +1885,7 @@ h4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  align-items: stretch;
+  align-items: center;
   background: white;
   border-radius: 8px;
   overflow: hidden;
@@ -2359,6 +2359,7 @@ h4 {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 20px;
 }
 
 .location-image img {
@@ -2385,7 +2386,7 @@ h4 {
 .location-image-single {
   position: relative;
   overflow: hidden;
-  border-radius: 0;
+  border-radius: 12px;
   box-shadow: none;
 }
 
@@ -2394,6 +2395,7 @@ h4 {
   height: 100%;
   min-height: 350px;
   object-fit: cover;
+  object-position: center center;
   display: block;
   transition: transform 0.5s ease;
 }
