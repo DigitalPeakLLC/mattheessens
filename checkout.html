@@ -499,9 +499,13 @@
 
         // Initialize checkout
         document.addEventListener('DOMContentLoaded', () => {
+            const savedCart = JSON.parse(localStorage.getItem('mattheessensCart') || '[]');
+            if (!savedCart || savedCart.length === 0) {
+                window.location.href = 'index.html';
+                return;
+            }
             loadOrderSummary();
             setupGiftMessageCounter();
-            // setupPayPalWhenReady() is called by PayPal SDK onload
         });
 
         function loadOrderSummary() {
@@ -510,7 +514,13 @@
             
             if (!cart || cart.length === 0) {
                 container.innerHTML = '<p>Your cart is empty. <a href="index.html">Shop now</a></p>';
-                document.getElementById('paypal-button-container').innerHTML = '<p style="text-align:center;color:#666;">Add items to your cart to continue.</p>';
+                subtotalEl.textContent = '$0.00';
+                document.getElementById('checkoutShipping').textContent = '$0.00';
+                document.getElementById('checkoutTotal').textContent = '$0.00';
+                document.querySelector('.checkout-form-container').style.display = 'none';
+                orderSubtotal = 0;
+                orderShipping = 0;
+                orderTotal = 0;
                 return;
             }
 
