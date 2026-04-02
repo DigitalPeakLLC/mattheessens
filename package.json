@@ -1,0 +1,23 @@
+{
+  "name": "matts-key-west",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benLavavein/matts-key-west.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benLavavein/matts-key-west/issues"
+  },
+  "homepage": "https://github.com/benLavavein/matts-key-west#readme",
+  "description": "",
+  "dependencies": {
+    "resend": "^6.10.0"
+  }
+}
