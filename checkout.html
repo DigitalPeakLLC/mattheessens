@@ -363,16 +363,6 @@
                         <div id="paypal-button-container"></div>
                     </div>
 
-                    <!-- Test Email (remove before going live) -->
-                    <div class="form-section" style="border: 2px dashed #E31B23; padding: 20px; border-radius: 8px;">
-                        <h3 style="color: #E31B23;">Test Email</h3>
-                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 12px;">Send a test order email to verify the Vercel API + Resend integration.</p>
-                        <button onclick="sendTestEmail()" id="testEmailBtn" style="background: #E31B23; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 1rem; cursor: pointer; width: 100%;">
-                            Send Test Email
-                        </button>
-                        <div id="testEmailResult" style="margin-top: 10px; font-size: 0.9rem;"></div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -914,39 +904,6 @@
             window.location.href = 'index.html';
         }
 
-        function sendTestEmail() {
-            const btn = document.getElementById('testEmailBtn');
-            const result = document.getElementById('testEmailResult');
-            btn.disabled = true;
-            btn.textContent = 'Sending...';
-            result.innerHTML = '';
-
-            const orderData = getOrderData();
-            orderData.paypalOrderId = 'TEST-' + Date.now();
-            orderData.transactionId = 'TEST-TXN-' + Date.now();
-            orderData.transactionStatus = 'COMPLETED';
-
-            fetch('/api/send-confirmation', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
-            })
-            .then(r => r.json().then(data => ({ status: r.status, data })))
-            .then(({ status, data }) => {
-                if (status === 200 && data.success) {
-                    result.innerHTML = '<span style="color:green;">Test email sent successfully!</span>';
-                } else {
-                    result.innerHTML = '<span style="color:#c00;">Error: ' + (data.error || JSON.stringify(data)) + '</span>';
-                }
-            })
-            .catch(err => {
-                result.innerHTML = '<span style="color:#c00;">Request failed: ' + err.message + '</span>';
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.textContent = 'Send Test Email';
-            });
-        }
     </script>
 </body>
 </html>

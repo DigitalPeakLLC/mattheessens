@@ -122,7 +122,7 @@ export function buildCustomerEmail(data) {
               Homemade Cookies, Fudge &amp; Key Lime Pie since 1992
             </p>
             <p style="margin:0;font-family:Georgia,serif;color:rgba(255,255,255,0.4);font-size:12px;">
-              Questions? Reply to this email or call us at (305) 293-1120
+              Questions? Call us at (305) 923-5418
             </p>
           </td>
         </tr>

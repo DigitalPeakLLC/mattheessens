@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   const sender = "noreply@mattskeywest.com";
-  const recipient = "ben@lavavein.com";
+  const recipient = "mattsmailorder@gmail.com";
 
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
