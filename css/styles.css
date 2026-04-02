@@ -64,6 +64,12 @@ h4 {
   text-decoration: none;
   font-family: "Georgia", serif;
   font-size: 1.6rem;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.08);
   font-weight: 700;
   color: var(--red);
 }
