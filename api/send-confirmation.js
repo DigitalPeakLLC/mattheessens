@@ -40,6 +40,7 @@ export default async function handler(req, res) {
   const allowedOrigins = [
     "https://mattskeywest.com",
     "https://www.mattskeywest.com",
+    "https://mattheessens.vercel.app",
   ];
   const origin = req.headers.origin || req.headers.referer || "";
   if (
