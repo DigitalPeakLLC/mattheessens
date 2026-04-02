@@ -2351,52 +2351,46 @@ h4 {
 }
 
 .location-image {
-  min-height: 350px;
-  height: 100%;
   background: none;
-  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.location-image .location-slider {
+  width: 100%;
 }
 
 .location-image img {
   width: 100%;
   height: 100%;
-  min-height: 350px;
   object-fit: cover;
   display: block;
   border-radius: 0;
 }
 
 /* Nashville image sizing */
-#location-nashville .location-image {
-  height: 350px;
-  min-height: 350px;
-}
-
 #location-nashville .location-image img {
-  height: 100%;
-  min-height: 350px;
+  height: 350px;
 }
 
 /* Single image styling (no slider) */
-.location-image-single {
-  position: relative;
+.location-image.location-image-single {
   overflow: hidden;
   border-radius: 12px;
-  box-shadow: none;
 }
 
 .location-image-single img {
   width: 100%;
-  height: 100%;
-  min-height: 350px;
+  height: 350px;
   object-fit: cover;
   object-position: center center;
   display: block;
+  border-radius: 12px;
   transition: transform 0.5s ease;
 }
 
@@ -2565,7 +2559,7 @@ h4 {
   }
 
   .location-image {
-    min-height: 250px;
+    padding: 15px;
   }
 
   .bundle-builder {
