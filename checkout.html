@@ -785,7 +785,7 @@
                             orderData.transactionId = transaction.id;
                             orderData.transactionStatus = transaction.status;
                             
-                            return fetch('https://matts-key-west.vercel.app/api/send-confirmation', {
+                            return fetch('/api/send-confirmation', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(orderData)
@@ -887,7 +887,7 @@
             orderData.transactionId = 'TEST-TXN-' + Date.now();
             orderData.transactionStatus = 'COMPLETED';
 
-            fetch('https://matts-key-west.vercel.app/api/send-confirmation', {
+            fetch('/api/send-confirmation', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
