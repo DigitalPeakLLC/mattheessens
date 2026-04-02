@@ -89,6 +89,12 @@ h1, h2, h3, h4 {
     padding-bottom: 3px;
 }
 
+.nav-links .dropdown-toggle:hover,
+.nav-links .dropdown-toggle.active {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
 /* Dropdown Menu */
 .dropdown {
     position: relative;
@@ -972,6 +978,10 @@ h1, h2, h3, h4 {
     object-fit: cover;
     border-radius: 12px;
     box-shadow: var(--shadow-lg);
+}
+
+.special-orders-images img:nth-child(2) {
+    object-position: center top;
 }
 
 @media (max-width: 768px) {
@@ -2246,14 +2256,13 @@ h1, h2, h3, h4 {
     border-radius: 0;
 }
 
-/* Fix blown out Nashville image */
+/* Nashville image sizing */
 #location-nashville .location-image {
     height: 350px;
     min-height: 350px;
 }
 
 #location-nashville .location-image img {
-    filter: brightness(0.85) contrast(1.1);
     height: 100%;
     min-height: 350px;
 }
@@ -2404,7 +2413,7 @@ h1, h2, h3, h4 {
     
     .location-detail:nth-child(even) .location-map,
     .location-detail:nth-child(even) .location-image {
-        order: 0;
+        order: -1;
     }
     
     .location-map {
