@@ -11,11 +11,9 @@ const cartSidebar = document.getElementById('cartSidebar');
 const cartOverlay = document.getElementById('cartOverlay');
 const cartItems = document.getElementById('cartItems');
 const cartTotal = document.getElementById('cartTotal');
-const bundleModal = document.getElementById('bundleModal');
 const bundleCount = document.getElementById('bundleCount');
 const progressFill = document.getElementById('progressFill');
 const bundleSelected = document.getElementById('bundleSelected');
-const bundleSummary = document.getElementById('bundleSummary');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -29,263 +27,146 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartUI();
 });
 
-// Quantity Adjustment
-function adjustQuantity(button, change) {
-    const input = button.parentElement.querySelector('.qty-input');
-    let newValue = parseInt(input.value) + change;
-    const maxVal = parseInt(input.max) || 4;
-    if (newValue < 1) newValue = 1;
-    if (newValue > maxVal) newValue = maxVal;
-    input.value = newValue;
-}
-
-// Add to Bundle with Quantity
+// Add to Bundle (single-click, adds 1 item)
 function addToBundle(button) {
-    const card = button.closest('.product-detail-card');
-    const input = card.querySelector('.qty-input');
-    const name = input.dataset.name;
-    const price = parseFloat(input.dataset.price);
-    const type = input.dataset.type;
-    const quantityToAdd = parseInt(input.value);
-    
-    // Check if this item is already in the bundle
-    const existingItem = bundle.find(item => item.name === name);
-    
-    // Calculate current total in bundle
-    const currentTotal = bundle.reduce((sum, item) => sum + item.quantity, 0);
-    
-    // If item exists, calculate what the new total would be
-    let newTotal;
-    if (existingItem) {
-        // Replace old quantity with new quantity
-        newTotal = currentTotal - existingItem.quantity + quantityToAdd;
-    } else {
-        newTotal = currentTotal + quantityToAdd;
-    }
-    
-    // Check if new total would exceed limit (4 for cookies, 3 for fudge)
+    const name = button.dataset.name;
+    const price = parseFloat(button.dataset.price);
+    const type = button.dataset.type;
     const maxItems = type === 'fudge' ? 3 : 4;
-    if (newTotal > maxItems) {
-        const remaining = maxItems - (currentTotal - (existingItem ? existingItem.quantity : 0));
-        if (remaining <= 0) {
-            alert(`Bundle is full! You can only have ${maxItems} items total.`);
-            return;
-        }
-        alert(`You can only have ${maxItems} items total. Please adjust the quantity.`);
-        input.value = remaining;
-        return;
-    }
-    
-    // Remove existing item if present
+    const currentTotal = bundle.reduce((sum, item) => sum + item.quantity, 0);
+
+    if (currentTotal >= maxItems) return;
+
+    const existingItem = bundle.find(item => item.name === name);
     if (existingItem) {
-        bundle = bundle.filter(item => item.name !== name);
+        existingItem.quantity += 1;
+    } else {
+        bundle.push({ name, price, type, quantity: 1 });
     }
-    
-    // Add to bundle with quantity
-    bundle.push({ name, price, type, quantity: quantityToAdd });
-    
-    // Update button
-    button.classList.add('selected');
-    button.textContent = `✓ ${quantityToAdd} in Bundle`;
-    button.style.background = '#4A7C59';
-    
+
+    // Flying emoji feedback
+    const emoji = type === 'fudge' ? '🍫' : '🍪';
+    const rect = button.getBoundingClientRect();
+    const fly = document.createElement('span');
+    fly.className = 'fly-emoji';
+    fly.textContent = emoji;
+    fly.style.left = (rect.left + rect.width / 2) + 'px';
+    fly.style.top = rect.top + 'px';
+    document.body.appendChild(fly);
+    fly.addEventListener('animationend', () => fly.remove());
+
+    const newTotal = bundle.reduce((sum, item) => sum + item.quantity, 0);
+    if (newTotal >= maxItems) {
+        button.innerHTML = 'Box is Full';
+        button.disabled = true;
+    }
+
     updateBundleUI();
-    
-    // Show modal when bundle is complete (4 for cookies, 3 for fudge)
-    if (newTotal === maxItems) {
-        setTimeout(() => {
-            showBundleModal();
-        }, 300);
-    }
 }
 
 function removeFromBundle(name) {
-    const item = bundle.find(i => i.name === name);
     bundle = bundle.filter(item => item.name !== name);
-    
-    // Reset button state
-    const inputs = document.querySelectorAll('.qty-input');
-    inputs.forEach(input => {
-        if (input.dataset.name === name) {
-            const card = input.closest('.product-detail-card');
-            const button = card.querySelector('.btn-add-bundle');
-            if (button) {
-                button.classList.remove('selected');
-                button.textContent = 'Add to Bundle';
-                button.style.background = '';
-            }
-            input.value = 1;
+    resetAllAddButtons();
+    updateBundleUI();
+}
+
+function resetAllAddButtons() {
+    const bundleType = bundle.length > 0 ? bundle[0].type : null;
+    const maxItems = bundleType === 'fudge' ? 3 : 4;
+    const isFull = bundle.reduce((sum, item) => sum + item.quantity, 0) >= maxItems;
+
+    document.querySelectorAll('.btn-add-bundle').forEach(btn => {
+        btn.style.background = '';
+        if (isFull) {
+            btn.innerHTML = 'Box is Full';
+            btn.disabled = true;
+        } else {
+            btn.innerHTML = '<span class="plus-icon">+</span> Add';
+            btn.disabled = false;
         }
     });
-    
-    updateBundleUI();
 }
 
 function updateBundleUI() {
     const totalItems = bundle.reduce((sum, item) => sum + item.quantity, 0);
-    const bundleTotal = bundle.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
-    // Determine bundle type from first item
-    const bundleType = bundle.length > 0 ? bundle[0].type : 'cookie';
-    const maxItems = bundleType === 'fudge' ? 3 : 4;
-    
-    // Update count
+    const isCookiePage = document.querySelector('.page-header-cookies');
+    const maxItems = isCookiePage ? 4 : 3;
+    const isFull = totalItems >= maxItems;
+
     if (bundleCount) bundleCount.textContent = totalItems;
-    
-    // Update progress bar
     if (progressFill) progressFill.style.width = `${(totalItems / maxItems) * 100}%`;
-    
-    // Update selected items display (below progress bar)
+
     if (bundleSelected) {
         if (bundle.length === 0) {
-            const emptyText = bundleType === 'fudge' 
-                ? 'Select 3 fudge slices below to build your bundle' 
-                : 'Select 4 cookies below to build your bundle';
+            const emptyText = isCookiePage
+                ? 'Select 4 cookies below to build your bundle'
+                : 'Select 3 fudge slices below to build your bundle';
             bundleSelected.innerHTML = `<p class="empty-bundle">${emptyText}</p>`;
         } else {
             bundleSelected.innerHTML = bundle.map(item => `
                 <div class="bundle-item">
                     ${item.name} x${item.quantity}
-                    <button onclick="removeFromBundle('${item.name}')">×</button>
+                    <button onclick="removeFromBundle('${item.name.replace(/'/g, "\\'")}')">×</button>
                 </div>
             `).join('');
         }
     }
-    
-    // Update modal summary - show just names without prices for both
-    if (bundleSummary) {
-        bundleSummary.innerHTML = bundle.map(item => `
-            <div class="bundle-summary-item">
-                <span>${item.name} x${item.quantity}</span>
-            </div>
-        `).join('');
+
+    const addBoxBtn = document.getElementById('addBoxBtn');
+    if (addBoxBtn) {
+        addBoxBtn.style.display = isFull ? 'inline-block' : 'none';
     }
-    
-    // Update modal total display
-    const modalTotal = document.querySelector('.bundle-total .total-price');
-    if (modalTotal) {
-        if (bundleType === 'fudge') {
-            // Fudge is always $25
-            modalTotal.textContent = '$25.00';
-        } else {
-            // Cookies show calculated total when complete
-            if (totalItems === 4) {
-                modalTotal.textContent = `Total: $${bundleTotal.toFixed(2)}`;
-            } else {
-                modalTotal.textContent = `${totalItems}/4 cookies selected`;
-            }
-        }
-    }
-}
 
-function showBundleModal() {
-    if (bundleModal) bundleModal.classList.add('active');
-}
-
-function closeBundleModal() {
-    if (bundleModal) bundleModal.classList.remove('active');
-}
-
-function addBundleToCart() {
-    const totalItems = bundle.reduce((sum, item) => sum + item.quantity, 0);
-    if (totalItems !== 4) return;
-    
-    const bundleNames = bundle.map(item => `${item.name} x${item.quantity}`).join(', ');
-    const bundleTotal = bundle.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
-    const bundleItem = {
-        id: Date.now(),
-        name: 'Cookie Box',
-        description: bundleNames,
-        items: [...bundle],
-        price: bundleTotal,
-        type: 'bundle'
-    };
-    
-    cart.push(bundleItem);
-    saveCart();
-    
-    // Clear bundle
-    bundle = [];
     document.querySelectorAll('.btn-add-bundle').forEach(btn => {
-        btn.classList.remove('selected');
-        btn.textContent = 'Add to Bundle';
-        btn.style.background = '';
+        if (isFull) {
+            btn.innerHTML = 'Box is Full';
+            btn.disabled = true;
+        }
     });
-    document.querySelectorAll('.qty-input').forEach(input => {
-        input.value = 1;
-    });
-    
+}
+
+function addBoxToCart() {
+    const isCookiePage = document.querySelector('.page-header-cookies');
+    const maxItems = isCookiePage ? 4 : 3;
+    const totalItems = bundle.reduce((sum, item) => sum + item.quantity, 0);
+    if (totalItems !== maxItems) return;
+
+    if (isCookiePage) {
+        const bundleNames = bundle.map(item => `${item.name} x${item.quantity}`).join(', ');
+        const bundleTotal = bundle.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        cart.push({
+            id: Date.now(),
+            name: 'Cookie Box',
+            description: bundleNames,
+            items: [...bundle],
+            price: bundleTotal,
+            type: 'bundle'
+        });
+    } else {
+        const bundleNames = bundle.map(item => `${item.name} x${item.quantity}`).join(', ');
+        cart.push({
+            id: Date.now(),
+            name: 'Fudge Bundle',
+            description: bundleNames,
+            items: [...bundle],
+            price: 25.00,
+            type: 'fudge'
+        });
+    }
+
+    saveCart();
+
+    bundle = [];
+    resetAllAddButtons();
     updateBundleUI();
-    closeBundleModal();
     updateCartUI();
     toggleCart();
-}
-
-function continueShopping() {
-    closeBundleModal();
 }
 
 function emptyBox() {
-    // Clear the bundle array
     bundle = [];
-    
-    // Reset all bundle UI elements
-    document.querySelectorAll('.btn-add-bundle').forEach(btn => {
-        btn.classList.remove('selected');
-        btn.textContent = 'Add to Box';
-        btn.style.background = '';
-    });
-    
-    // Reset all quantity inputs to 1
-    document.querySelectorAll('.qty-input').forEach(input => {
-        input.value = 1;
-    });
-    
-    // Update the bundle UI
+    resetAllAddButtons();
     updateBundleUI();
-    
-    // Close the modal
-    closeBundleModal();
-}
-
-// Add Fudge to Cart (3 slices for $25)
-function addFudgeToCart() {
-    const totalItems = bundle.reduce((sum, item) => sum + item.quantity, 0);
-    if (totalItems !== 3) {
-        alert('Please select exactly 3 fudge slices.');
-        return;
-    }
-    
-    const bundleNames = bundle.map(item => `${item.name} x${item.quantity}`).join(', ');
-    
-    const bundleItem = {
-        id: Date.now(),
-        name: 'Fudge Bundle',
-        description: bundleNames,
-        items: [...bundle],
-        price: 25.00,
-        type: 'fudge'
-    };
-    
-    cart.push(bundleItem);
-    saveCart();
-    
-    // Clear bundle
-    bundle = [];
-    document.querySelectorAll('.btn-add-bundle').forEach(btn => {
-        btn.classList.remove('selected');
-        btn.textContent = 'Add to Box';
-        btn.style.background = '';
-    });
-    document.querySelectorAll('.qty-input').forEach(input => {
-        input.value = 1;
-    });
-    
-    updateBundleUI();
-    closeBundleModal();
-    updateCartUI();
-    toggleCart();
 }
 
 // Regular Add to Cart
@@ -550,13 +431,6 @@ function initMobileMenu() {
             }
         });
     }
-}
-
-// Close modal on overlay click
-if (bundleModal) {
-    bundleModal.addEventListener('click', (e) => {
-        if (e.target === bundleModal) closeBundleModal();
-    });
 }
 
 // Newsletter form

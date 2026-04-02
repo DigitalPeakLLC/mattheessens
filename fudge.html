@@ -22,10 +22,10 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container nav-container">
-            <a href="index.html" class="logo"><img src="images/logo-new.jpg" alt="Mattheessen's" style="height: 150px;"></a>
+            <a href="index.html" class="logo"><img src="images/logo-new.jpg" alt="Mattheessen's" style="height: 120px;"></a>
             <ul class="nav-links">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Mail Order <span class="dropdown-arrow">▼</span></a>
+                    <span class="dropdown-toggle">Order <span class="dropdown-arrow">▼</span></span>
                     <ul class="dropdown-menu">
                         <li><a href="cookies.html">Cookies</a></li>
                         <li><a href="fudge.html" class="active">Fudge</a></li>
@@ -71,85 +71,43 @@
             <div class="bundle-selected" id="bundleSelected">
                 <p class="empty-bundle">Select 3 fudge slices below to build your bundle</p>
             </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="btn btn-primary" id="addBoxBtn" style="display: none;" onclick="addBoxToCart()">Add Box to Cart</button>
+            </div>
         </div>
     </section>
 
     <!-- Fudge Menu -->
     <section class="product-menu">
-        <div class="container">            
+        <div class="container">
             <h2 class="category-title">🍫 Fudge — $25 per Box</h2>
-            
             <div class="product-grid-large">
-                <!-- Chocolate Fudge -->
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/fudge-chocolate.jpg" alt="Chocolate Fudge">
-                    </div>
+                    <div class="product-detail-image"><img src="images/fudge-chocolate.jpg" alt="Chocolate Fudge"></div>
                     <div class="product-detail-info">
                         <h3>Chocolate Fudge</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="3" class="qty-input" data-name="Chocolate Fudge" data-price="8.30" data-type="fudge">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Chocolate Fudge" data-price="8.30" data-type="fudge" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
-                <!-- Chocolate Pecan Fudge -->
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/fudge-chocolate-pecan.jpg" alt="Chocolate Pecan Fudge">
-                    </div>
+                    <div class="product-detail-image"><img src="images/fudge-chocolate-pecan.jpg" alt="Chocolate Pecan Fudge"></div>
                     <div class="product-detail-info">
                         <h3>Chocolate Pecan Fudge</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="3" class="qty-input" data-name="Chocolate Pecan Fudge" data-price="8.30" data-type="fudge">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Chocolate Pecan Fudge" data-price="8.30" data-type="fudge" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
-                <!-- Peanut Butter Fudge -->
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/fudge-peanut-butter.jpg" alt="Peanut Butter Fudge">
-                    </div>
+                    <div class="product-detail-image"><img src="images/fudge-peanut-butter.jpg" alt="Peanut Butter Fudge"></div>
                     <div class="product-detail-info">
                         <h3>Peanut Butter Fudge</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="3" class="qty-input" data-name="Peanut Butter Fudge" data-price="8.30" data-type="fudge">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Peanut Butter Fudge" data-price="8.30" data-type="fudge" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Bundle Popup Modal -->
-    <div class="modal-overlay" id="bundleModal">
-        <div class="modal">
-            <button class="modal-close" onclick="closeBundleModal()">&times;</button>
-            <div class="modal-content">
-                <div class="modal-icon">📦</div>
-                <h2>Fudge Box Complete!</h2>
-                <p>You've selected 3 fudge slices</p>
-                <div class="bundle-summary" id="bundleSummary"></div>
-                <div class="bundle-total">
-                    <span class="total-price">$25.00</span>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn btn-primary" onclick="addFudgeToCart()">Add to Cart</button>
-                    <button class="btn btn-outline" onclick="emptyBox()">Empty Box</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
@@ -248,15 +206,6 @@
                             </svg>
                         </a>
                     </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="cookies.html">Cookies</a></li>
-                        <li><a href="macaroons.html">Macaroons</a></li>
-                        <li><a href="locations.html">Locations</a></li>
-                    </ul>
                 </div>
                 <div class="footer-contact">
                     <h4>Contact</h4>

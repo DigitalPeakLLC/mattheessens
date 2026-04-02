@@ -22,10 +22,10 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container nav-container">
-            <a href="index.html" class="logo"><img src="images/logo-new.jpg" alt="Mattheessen's" style="height: 150px;"></a>
+            <a href="index.html" class="logo"><img src="images/logo-new.jpg" alt="Mattheessen's" style="height: 120px;"></a>
             <ul class="nav-links">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Mail Order <span class="dropdown-arrow">▼</span></a>
+                    <span class="dropdown-toggle">Order <span class="dropdown-arrow">▼</span></span>
                     <ul class="dropdown-menu">
                         <li><a href="cookies.html" class="active">Cookies</a></li>
                         <li><a href="fudge.html">Fudge</a></li>
@@ -71,223 +71,126 @@
             <div class="bundle-selected" id="bundleSelected">
                 <p class="empty-bundle">Select 4 cookies below to build your bundle</p>
             </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="btn btn-primary" id="addBoxBtn" style="display: none;" onclick="addBoxToCart()">Add Box to Cart</button>
+            </div>
         </div>
     </section>
 
     <!-- Cookies Menu -->
     <section class="product-menu">
         <div class="container">
-            <h2 class="category-title">🍪 Cookies</h2>
-            
             <div class="product-grid-large">
-                <!-- Chocolate Chip -->
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-chocolate-chip.jpg" alt="Chocolate Chip Cookie">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-chocolate-chip.jpg" alt="Chocolate Chip Cookie"></div>
+                    <span class="price-ribbon">$7</span>
                     <div class="product-detail-info">
-                        <h3>Chocolate Chip — $7</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Chocolate Chip" data-price="7.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Chocolate Chip</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Chocolate Chip" data-price="7.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-choco-pecan.jpg" alt="Chocolate Chip with Pecans">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-choco-pecan.jpg" alt="Chocolate Chip with Pecans"></div>
+                    <span class="price-ribbon">$8</span>
                     <div class="product-detail-info">
-                        <h3>Chocolate Chip with Pecans — $8</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Chocolate Chip with Pecans" data-price="8.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Chocolate Chip with Pecans</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Chocolate Chip with Pecans" data-price="8.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-choco-pecan-mac.jpg" alt="Chocolate Chip with Pecans and Macadamia Nuts">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-choco-pecan-mac.jpg" alt="Chocolate Chip with Pecans and Macadamia Nuts"></div>
+                    <span class="price-ribbon">$8</span>
                     <div class="product-detail-info">
-                        <h3>Chocolate Chip with Pecans & Macadamia Nuts — $8</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Chocolate Chip with Pecans & Macadamia" data-price="8.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Chocolate Chip with Pecans & Macadamia Nuts</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Chocolate Chip with Pecans & Macadamia" data-price="8.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-choco-mac.jpg" alt="Chocolate Chip with Macadamia Nuts">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-choco-mac.jpg" alt="Chocolate Chip with Macadamia Nuts"></div>
+                    <span class="price-ribbon">$8</span>
                     <div class="product-detail-info">
-                        <h3>Chocolate Chip with Macadamia Nuts — $8</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Chocolate Chip with Macadamia Nuts" data-price="8.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
-                    </div>
-                </div>
-
-                <!-- Oatmeal Raisin -->
-                <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-oatmeal-raisin.jpg" alt="Oatmeal Raisin Cookie">
-                    </div>
-                    <div class="product-detail-info">
-                        <h3>Oatmeal Raisin — $7</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Oatmeal Raisin" data-price="7.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
-                    </div>
-                </div>
-
-                <!-- Peanut Butter -->
-                <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-peanut-butter.jpg" alt="Peanut Butter Cookie">
-                    </div>
-                    <div class="product-detail-info">
-                        <h3>Peanut Butter — $7</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Peanut Butter" data-price="7.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Chocolate Chip with Macadamia Nuts</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Chocolate Chip with Macadamia Nuts" data-price="8.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-pb-choco-fudge.jpg" alt="Peanut Butter with Chocolate and PB Fudge">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-oatmeal-raisin.jpg" alt="Oatmeal Raisin Cookie"></div>
+                    <span class="price-ribbon">$7</span>
                     <div class="product-detail-info">
-                        <h3>Peanut Butter with Chocolate & PB Fudge — $12</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Peanut Butter with Chocolate & PB Fudge" data-price="12.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
-                    </div>
-                </div>
-
-                <!-- Sugar Cookies -->
-                <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-sugar-plain.jpg" alt="Sugar Cookie">
-                    </div>
-                    <div class="product-detail-info">
-                        <h3>Sugar Cookie — $7</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Sugar Cookie" data-price="7.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Oatmeal Raisin</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Oatmeal Raisin" data-price="7.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-sugar-sprinkles.jpg" alt="Sugar Cookie with Sprinkles">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-peanut-butter.jpg" alt="Peanut Butter Cookie"></div>
+                    <span class="price-ribbon">$7</span>
                     <div class="product-detail-info">
-                        <h3>Sugar Cookie with Sprinkles — $7</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Sugar Cookie with Sprinkles" data-price="7.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Peanut Butter</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Peanut Butter" data-price="7.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-sugar-mnms.jpg" alt="Sugar Cookie with M&M's">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-pb-choco-fudge.jpg" alt="Peanut Butter with Chocolate and PB Fudge"></div>
+                    <span class="price-ribbon">$12</span>
                     <div class="product-detail-info">
-                        <h3>Sugar Cookie with M&M's — $7</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Sugar Cookie with M&M's" data-price="7.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Peanut Butter with Chocolate & PB Fudge</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Peanut Butter with Chocolate & PB Fudge" data-price="12.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
-                <!-- Snickerdoodle -->
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-cinnamon-sugar.jpg" alt="Snickerdoodle Cookie">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-sugar-plain.jpg" alt="Sugar Cookie"></div>
+                    <span class="price-ribbon">$7</span>
                     <div class="product-detail-info">
-                        <h3>Snickerdoodle — $7</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="Snickerdoodle" data-price="7.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Sugar Cookie</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Sugar Cookie" data-price="7.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
 
-                <!-- White Chocolate Macadamia Nut -->
                 <div class="product-detail-card">
-                    <div class="product-detail-image">
-                        <img src="images/cookie-white-choco-mac.jpg" alt="White Chocolate Macadamia Nut Cookie">
-                    </div>
+                    <div class="product-detail-image"><img src="images/cookie-sugar-sprinkles.jpg" alt="Sugar Cookie with Sprinkles"></div>
+                    <span class="price-ribbon">$7</span>
                     <div class="product-detail-info">
-                        <h3>White Chocolate with Macadamia Nuts — $8</h3>
-                        <div class="quantity-selector">
-                            <button onclick="adjustQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" max="4" class="qty-input" data-name="White Chocolate with Macadamia Nuts" data-price="8.00" data-type="cookie">
-                            <button onclick="adjustQuantity(this, 1)">+</button>
-                        </div>
-                        <button class="btn btn-primary btn-add-bundle" onclick="addToBundle(this)">Add to Box</button>
+                        <h3>Sugar Cookie with Sprinkles</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Sugar Cookie with Sprinkles" data-price="7.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
+                    </div>
+                </div>
+
+                <div class="product-detail-card">
+                    <div class="product-detail-image"><img src="images/cookie-sugar-mnms.jpg" alt="Sugar Cookie with M&M's"></div>
+                    <span class="price-ribbon">$7</span>
+                    <div class="product-detail-info">
+                        <h3>Sugar Cookie with M&M's</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Sugar Cookie with M&M's" data-price="7.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
+                    </div>
+                </div>
+
+                <div class="product-detail-card">
+                    <div class="product-detail-image"><img src="images/cookie-cinnamon-sugar.jpg" alt="Snickerdoodle Cookie"></div>
+                    <span class="price-ribbon">$7</span>
+                    <div class="product-detail-info">
+                        <h3>Snickerdoodle</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="Snickerdoodle" data-price="7.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
+                    </div>
+                </div>
+
+                <div class="product-detail-card">
+                    <div class="product-detail-image"><img src="images/cookie-white-choco-mac.jpg" alt="White Chocolate Macadamia Nut Cookie"></div>
+                    <span class="price-ribbon">$8</span>
+                    <div class="product-detail-info">
+                        <h3>White Chocolate with Macadamia Nuts</h3>
+                        <button class="btn btn-primary btn-add-bundle" data-name="White Chocolate with Macadamia Nuts" data-price="8.00" data-type="cookie" onclick="addToBundle(this)"><span class="plus-icon">+</span> Add</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Bundle Popup Modal -->
-    <div class="modal-overlay" id="bundleModal">
-        <div class="modal">
-            <button class="modal-close" onclick="closeBundleModal()">&times;</button>
-            <div class="modal-content">
-                <div class="modal-icon">📦</div>
-                <h2>Cookie Bundle Complete!</h2>
-                <p>You've selected 4 cookies</p>
-                <div class="bundle-summary" id="bundleSummary"></div>
-                <div class="bundle-total">
-                    <span class="total-price">0/4 cookies selected</span>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn btn-primary" onclick="addBundleToCart()">Add to Cart</button>
-                    <button class="btn btn-outline" onclick="emptyBox()">Empty Box</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
@@ -386,15 +289,6 @@
                             </svg>
                         </a>
                     </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="fudge.html">Fudge</a></li>
-                        <li><a href="macaroons.html">Macaroons</a></li>
-                        <li><a href="locations.html">Locations</a></li>
-                    </ul>
                 </div>
                 <div class="footer-contact">
                     <h4>Contact</h4>
