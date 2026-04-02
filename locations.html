@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XW9N6CPCHZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XW9N6CPCHZ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations | Mattheessen's</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .location-slider {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .location-slider .slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .location-slider .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            z-index: 1;
+        }
+        
+        .location-slider .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .location-slider .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .location-slider:hover .slide.active img {
+            transform: scale(1.03);
+        }
+        
+        /* Navigation Arrows */
+        .location-slider .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--red);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 10;
+            opacity: 0;
+        }
+        
+        .location-slider:hover .slider-arrow {
+            opacity: 1;
+        }
+        
+        .location-slider .slider-arrow:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .location-slider .slider-arrow.prev {
+            left: 15px;
+        }
+        
+        .location-slider .slider-arrow.next {
+            right: 15px;
+        }
+        
+        /* Dot Navigation */
+        .location-slider .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        .location-slider .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .location-slider .slider-dot:hover {
+            background: rgba(255,255,255,0.8);
+        }
+        
+        .location-slider .slider-dot.active {
+            background: white;
+            transform: scale(1.3);
+            border-color: var(--red);
+        }
+        
+        /* Image Label */
+        .location-slider .slide-label {
+            position: absolute;
+            bottom: 60px;
+            left: 20px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease;
+            z-index: 5;
+        }
+        
+        .location-slider .slide.active .slide-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .location-slider {
+                height: 250px;
+            }
+            
+            .location-slider .slider-arrow {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+                opacity: 1;
+            }
+            
+            .location-slider .slider-arrow.prev {
+                left: 10px;
+            }
+            
+            .location-slider .slider-arrow.next {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><img src="images/logo-new.jpg" alt="Mattheessen's" style="height: 150px;"></a>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Mail Order <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="cookies.html">Cookies</a></li>
+                        <li><a href="fudge.html">Fudge</a></li>
+                        <li><a href="macaroons.html">Macaroons</a></li>
+                    </ul>
+                </li>
+                <li><a href="story.html">Our Story</a></li>
+                <li><a href="locations.html" class="active">Locations</a></li>
+            </ul>
+            <div class="cart-icon" id="cartIcon" onclick="toggleCart()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Video Section -->
+    <section class="hero-video">
+        <div class="video-container">
+            <video autoplay muted loop playsinline poster="images/hero-poster.jpg">
+                <source src="video/hero-locations.mp4" type="video/mp4">
+            </video>
+            <!-- Video Overlay Content -->
+            <div class="video-overlay">
+                <div class="video-content">
+                    <h1 class="video-title">Our Locations</h1>
+                    <p class="video-subtitle">Four Locations in Two Iconic Cities</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations -->
+    <section class="locations-section" id="locations">
+        <div class="container">
+            <div class="locations-grid">
+
+                <!-- Key West Locations -->
+                
+                <!-- Location 1: 419 Duval St -->
+                <div class="location-detail" id="location-419">
+                    <div class="location-image">
+                        <div class="location-slider" data-slider="loc-419">
+                            <div class="slides">
+                                <div class="slide active" data-index="0">
+                                    <img src="images/loc-419-duval-int.jpg" alt="419 Duval Street Interior">
+                                </div>
+                                <div class="slide" data-index="1">
+                                    <img src="images/loc-419-duval-ext.jpg" alt="419 Duval Street Exterior">
+                                </div>
+                            </div>
+                            <button class="slider-arrow prev" aria-label="Previous image">❮</button>
+                            <button class="slider-arrow next" aria-label="Next image">❯</button>
+                            <div class="slider-nav">
+                                <div class="slider-dot active" data-index="0"></div>
+                                <div class="slider-dot" data-index="1"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location-info">
+                        <span class="city-badge">Key West, FL</span>
+                        <h2>419 Duval Street</h2>
+                        <div class="location-address">
+                            <p>419 D Duval St</p>
+                            <p>Key West, FL 33040</p>
+                        </div>
+                        
+                        <div class="location-features">
+                            <span class="feature">🍪 Fresh Cookies</span>
+                            <span class="feature">🍫 Marble Slab Fudge</span>
+                            <span class="feature">🥥 Coconut Macaroons</span>
+                            <span class="feature">🥜 Peanut Butter Fudge Cookies</span>
+                            <span class="feature">🥧 Key Lime Pie</span>
+                            <span class="feature">🍦 Homemade Ice Cream</span>
+                        </div>
+                        
+                        <a href="https://maps.app.goo.gl/a4tp7SKEqLfbF4xn6" target="_blank" class="location-map-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Open in Google Maps
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Location 2: 106 Duval St (White Street) -->
+                <div class="location-detail" id="location-106">
+                    <div class="location-info">
+                        <span class="city-badge">Key West, FL</span>
+                        <h2>106 Duval Street</h2>
+                        <div class="location-address">
+                            <p>106 Duval Street</p>
+                            <p>Key West, FL 33040</p>
+                        </div>
+                        
+                        <div class="location-features">
+                            <span class="feature">🍪 Fresh Cookies</span>
+                            <span class="feature">🥥 Coconut Macaroons</span>
+                            <span class="feature">🥜 Peanut Butter Fudge Cookies</span>
+                            <span class="feature">🥧 Key Lime Pie</span>
+                            <span class="feature">🍦 Homemade Ice Cream</span>
+                        </div>
+                        
+                        <a href="https://maps.app.goo.gl/EaT682QqkhM77zTNA" target="_blank" class="location-map-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Open in Google Maps
+                        </a>
+                    </div>
+                    
+                    <div class="location-image">
+                        <div class="location-slider" data-slider="loc-106">
+                            <div class="slides">
+                                <div class="slide active" data-index="0">
+                                    <img src="images/loc-106-duval-int.jpg" alt="106 Duval Street Interior">
+                                </div>
+                                <div class="slide" data-index="1">
+                                    <img src="images/loc-106-duval-ext.jpg" alt="106 Duval Street Exterior">
+                                </div>
+                            </div>
+                            <button class="slider-arrow prev" aria-label="Previous image">❮</button>
+                            <button class="slider-arrow next" aria-label="Next image">❯</button>
+                            <div class="slider-nav">
+                                <div class="slider-dot active" data-index="0"></div>
+                                <div class="slider-dot" data-index="1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location 3: 614 Greene Street -->
+                <div class="location-detail" id="location-614">
+                    <div class="location-image">
+                        <div class="location-slider" data-slider="loc-614">
+                            <div class="slides">
+                                <div class="slide active" data-index="0">
+                                    <img src="images/loc-614-greene-int.jpg" alt="614 Greene Street Interior">
+                                </div>
+                                <div class="slide" data-index="1">
+                                    <img src="images/loc-614-greene-ext.jpg" alt="614 Greene Street Exterior">
+                                </div>
+                            </div>
+                            <button class="slider-arrow prev" aria-label="Previous image">❮</button>
+                            <button class="slider-arrow next" aria-label="Next image">❯</button>
+                            <div class="slider-nav">
+                                <div class="slider-dot active" data-index="0"></div>
+                                <div class="slider-dot" data-index="1"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="location-info">
+                        <span class="city-badge">Key West, FL</span>
+                        <h2>614 Greene Street</h2>
+                        <div class="location-address">
+                            <p>614 Greene Street</p>
+                            <p>Key West, FL 33040</p>
+                        </div>
+                        
+                        <div class="location-features">
+                            <span class="feature">🍪 Fresh Cookies</span>
+                            <span class="feature">🥥 Coconut Macaroons</span>
+                            <span class="feature">🥜 Peanut Butter Fudge Cookies</span>
+                            <span class="feature">🥧 Key Lime Pie</span>
+                            <span class="feature">🍦 Homemade Ice Cream</span>
+                        </div>
+                        
+                        <a href="https://maps.app.goo.gl/GcNCC5Xf8L48HBmx5" target="_blank" class="location-map-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Open in Google Maps
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Nashville Location -->
+                <div class="location-detail" id="location-nashville">
+                    <div class="location-info">
+                        <span class="city-badge">Nashville, TN</span>
+                        <h2>123 2nd Avenue North</h2>
+                        <div class="location-address">
+                            <p>123 2nd Avenue North</p>
+                            <p>Nashville, TN 37201</p>
+                        </div>
+                        
+                        <div class="location-features">
+                            <span class="feature">🍪 Fresh Cookies</span>
+                            <span class="feature">🍫 Marble Slab Fudge</span>
+                            <span class="feature">🥥 Coconut Macaroons</span>
+                            <span class="feature">🥜 Peanut Butter Fudge Cookies</span>
+                            <span class="feature">🥧 Key Lime Pie</span>
+                            <span class="feature">🍦 Homemade Ice Cream</span>
+                        </div>
+                        
+                        <a href="https://maps.app.goo.gl/gTEDYagdef5WpTBF9" target="_blank" class="location-map-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Open in Google Maps
+                        </a>
+                    </div>
+                    
+                    <div class="location-image location-image-single">
+                        <img src="images/loc-nashville.jpg" alt="Nashville Location">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Mail Order Banner -->
+    <section class="mail-order-banner">
+        <div class="container">
+            <h2>Can't make it to the Store?</h2>
+            <p>Get your treats mailed to your door.</p>
+        </div>
+    </section>
+
+    <!-- Shop Categories (like home page) -->
+    <section class="shop-categories">
+        <div class="container">
+            <h2 class="section-title">Order Now</h2>
+            <div class="category-buttons">
+                <a href="cookies.html" class="category-btn">
+                    <img src="images/cookies-thumb.jpg" alt="Cookies" class="category-img">
+                    <span class="category-name">Cookies</span>
+                </a>
+                <a href="fudge.html" class="category-btn">
+                    <img src="images/fudge-thumb.jpg" alt="Fudge" class="category-img">
+                    <span class="category-name">Fudge</span>
+                </a>
+                <a href="macaroons.html" class="category-btn">
+                    <img src="images/macaroons-thumb.jpg" alt="Macaroons" class="category-img">
+                    <span class="category-name">Macaroons</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="cart-close" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <a href="checkout.html" class="btn btn-primary btn-full">Checkout</a>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Mattheessen's</h3>
+                    <p>Serving homemade treats with love since 1993.</p>
+                    <div class="social-links">
+                        <a href="https://www.tiktok.com/@cookieboyyy" target="_blank" class="social-icon" title="TikTok">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/mattheessenskeywest/" target="_blank" class="social-icon" title="Key West Instagram">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/mattheessensnashville/" target="_blank" class="social-icon" title="Nashville Instagram">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100063786062164" target="_blank" class="social-icon" title="Facebook">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cookies.html">Cookies</a></li>
+                        <li><a href="fudge.html">Fudge</a></li>
+                        <li><a href="macaroons.html">Macaroons</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Our Locations</h4>
+                    <p>Key West, FL (3 locations)</p>
+                    <p>Nashville, TN</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mattheessen's. All rights reserved. <a href="privacy.html" style="color: rgba(255,255,255,0.6); margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Location Slider - Enhanced Slideshow
+        document.querySelectorAll('.location-slider').forEach(slider => {
+            const slides = slider.querySelectorAll('.slide');
+            const dots = slider.querySelectorAll('.slider-dot');
+            const prevBtn = slider.querySelector('.slider-arrow.prev');
+            const nextBtn = slider.querySelector('.slider-arrow.next');
+            
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+            let autoScrollInterval;
+            let userInteractionTimeout;
+            
+            function showSlide(index) {
+                // Handle wrapping
+                if (index < 0) index = totalSlides - 1;
+                if (index >= totalSlides) index = 0;
+                
+                currentIndex = index;
+                
+                // Remove active class from all slides
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    dots[i].classList.remove('active');
+                });
+                
+                // Add active class to current slide
+                slides[currentIndex].classList.add('active');
+                dots[currentIndex].classList.add('active');
+            }
+            
+            function nextSlide() {
+                showSlide(currentIndex + 1);
+            }
+            
+            function prevSlide() {
+                showSlide(currentIndex - 1);
+            }
+            
+            function startAutoScroll() {
+                stopAutoScroll();
+                autoScrollInterval = setInterval(nextSlide, 4000);
+            }
+            
+            function stopAutoScroll() {
+                clearInterval(autoScrollInterval);
+            }
+            
+            function handleUserInteraction() {
+                stopAutoScroll();
+                clearTimeout(userInteractionTimeout);
+                userInteractionTimeout = setTimeout(startAutoScroll, 8000); // Resume after 8 seconds
+            }
+            
+            // Arrow buttons
+            if (prevBtn) {
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                    handleUserInteraction();
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                    handleUserInteraction();
+                });
+            }
+            
+            // Dot navigation
+            dots.forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showSlide(parseInt(dot.dataset.index));
+                    handleUserInteraction();
+                });
+            });
+            
+            // Touch/Swipe support
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            slider.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            slider.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > 50) { // Minimum swipe distance
+                    if (diff > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                    handleUserInteraction();
+                }
+            }, { passive: true });
+            
+            // Pause on hover
+            slider.addEventListener('mouseenter', stopAutoScroll);
+            slider.addEventListener('mouseleave', startAutoScroll);
+            
+            // Start auto-scroll
+            startAutoScroll();
+        });
+    </script>
+</body>
+</html>

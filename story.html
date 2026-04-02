@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XW9N6CPCHZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XW9N6CPCHZ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | Mattheessen's</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .story-with-image {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+        .story-with-image.reverse {
+            direction: rtl;
+        }
+        .story-with-image.reverse > * {
+            direction: ltr;
+        }
+        .story-with-image .story-text {
+            padding: 20px;
+        }
+        .story-with-image .story-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .story-with-image .story-image img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .story-with-image {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .story-with-image .story-image img {
+                height: 250px;
+            }
+        }
+
+        .archival-gallery {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid #ddd;
+        }
+
+        .archival-gallery h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .archival-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .archival-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .archival-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            .archival-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .archival-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><img src="images/logo-new.jpg" alt="Mattheessen's" style="height: 150px;"></a>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Mail Order <span class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="cookies.html">Cookies</a></li>
+                        <li><a href="fudge.html">Fudge</a></li>
+                        <li><a href="macaroons.html">Macaroons</a></li>
+                    </ul>
+                </li>
+                <li><a href="story.html" class="active">Our Story</a></li>
+                <li><a href="locations.html">Locations</a></li>
+            </ul>
+            <div class="cart-icon" id="cartIcon" onclick="toggleCart()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Video Section -->
+    <section class="hero-video">
+        <div class="video-container">
+            <video autoplay muted loop playsinline poster="images/hero-poster.jpg">
+                <source src="video/hero-story.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Video Overlay Content -->
+            <div class="video-overlay">
+                <div class="video-content">
+                    <h1 class="video-title">Our Story</h1>
+                    <p class="video-subtitle">From a Small Coffee Kiosk to Four Beloved Locations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Content -->
+    <section class="story-section" id="story">
+        <div class="container">
+            <div class="story-content">
+
+                <!-- The Beginning -->
+                <div class="story-with-image">
+                    <div class="story-text">
+                        <h2>About Mattheessen's</h2>
+                        <p>Mattheessen's story began in <strong>1993</strong>, when the Mattheessen family moved to <strong>Key West, Florida</strong>, and opened a small coffee kiosk named after their daughter, <strong>Kayla's Cafe</strong>. What started as a simple dream grew into something sweeter.</p>
+                        <p>Not long after, the family expanded into a fudge and cookie shop, and with the success of <strong>Mattheessen's Candy Kitchen</strong>, the brand continued to grow. Today, Mattheessen's proudly operates <strong>three beloved locations in Key West</strong> – including two on world-famous <strong>Duval Street</strong> and one on <strong>Greene Street</strong> – along with a location in <strong>Nashville, Tennessee</strong>, just off <strong>Broadway on 2nd Avenue N.</strong></p>
+                    </div>
+                    <div class="story-image">
+                        <img src="images/family-2026.jpg" alt="Mattheessen Family">
+                    </div>
+                </div>
+
+                <!-- Made Fresh -->
+                <div class="story-with-image reverse">
+                    <div class="story-text">
+                        <h2>Made Fresh. Made Here.</h2>
+                        <p>At Mattheessen's, we believe the best treats start with the <strong>finest ingredients</strong> and are made <strong>fresh in-store, every day</strong>. Everything we sell is handcrafted right where you buy it – from our famous <strong>half-pound cookies</strong> and <strong>marble-slab fudge</strong> to <strong>homemade ice cream</strong> and chocolate-dipped <strong>key lime pie</strong>.</p>
+                        <p>One bite is all it takes to understand why our guests return again and again.</p>
+                    </div>
+                    <div class="story-image">
+                        <img src="images/archival.jpg" alt="Archival Photo">
+                    </div>
+                </div>
+
+                <!-- Sweet Service -->
+                <div class="story-with-image">
+                    <div class="story-text">
+                        <h2>A Tradition of Sweet Service</h2>
+                        <p>When you visit Mattheessen's, you'll experience <strong>friendly customer service</strong>, a welcoming atmosphere, and sweets that keep families coming back for generations. Whether you're strolling Duval Street, exploring historic Greene Street, or soaking in the energy of downtown Nashville, we're proud to be part of your memories.</p>
+                    </div>
+                    <div class="story-image">
+                        <img src="images/duval-baking.jpg" alt="Duval Street Baking">
+                    </div>
+                </div>
+
+                <!-- Fourth Photo Section -->
+                <div class="story-with-image reverse">
+                    <div class="story-text">
+                        <h2>Generations of Sweetness</h2>
+                        <p>From our family to yours, we've been creating moments of joy for over 30 years. Every cookie, every piece of fudge, every scoop of ice cream is made with the same care and passion that started it all back in 1993.</p>
+                    </div>
+                    <div class="story-image">
+                        <img src="images/duval-cookies.png" alt="Duval Cookies">
+                    </div>
+                </div>
+
+                <!-- Archival Photos Gallery -->
+                <div class="archival-gallery">
+                    <h2>Through the Years</h2>
+                    <div class="archival-grid">
+                        <div class="archival-item">
+                            <img src="images/archival-5.jpg" alt="Mattheessen's Through the Years">
+                        </div>
+                        <div class="archival-item">
+                            <img src="images/archival-2.jpg" alt="Mattheessen's Through the Years">
+                        </div>
+                        <div class="archival-item">
+                            <img src="images/archival-3.jpg" alt="Mattheessen's Through the Years">
+                        </div>
+                        <div class="archival-item">
+                            <img src="images/archival-4.jpg" alt="Mattheessen's Through the Years">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Mail Order Banner -->
+    <section class="mail-order-banner">
+        <div class="container">
+            <h2>Can't make it to the Store?</h2>
+            <p>Get your treats mailed to your door.</p>
+            <div class="category-buttons">
+                <a href="cookies.html" class="category-btn">
+                    <img src="images/cookies-thumb.jpg" alt="Cookies" class="category-img">
+                    <span class="category-name">Cookies</span>
+                </a>
+                <a href="fudge.html" class="category-btn">
+                    <img src="images/fudge-thumb.jpg" alt="Fudge" class="category-img">
+                    <span class="category-name">Fudge</span>
+                </a>
+                <a href="macaroons.html" class="category-btn">
+                    <img src="images/macaroons-thumb.jpg" alt="Macaroons" class="category-img">
+                    <span class="category-name">Macaroons</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="cart-close" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <a href="checkout.html" class="btn btn-primary btn-full">Checkout</a>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Mattheessen's</h3>
+                    <p>Serving homemade treats with love since 1993.</p>
+                    <div class="social-links">
+                        <a href="https://www.tiktok.com/@cookieboyyy" target="_blank" class="social-icon" title="TikTok">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/mattheessenskeywest/" target="_blank" class="social-icon" title="Key West Instagram">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/mattheessensnashville/" target="_blank" class="social-icon" title="Nashville Instagram">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100063786062164" target="_blank" class="social-icon" title="Facebook">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cookies.html">Cookies</a></li>
+                        <li><a href="fudge.html">Fudge</a></li>
+                        <li><a href="macaroons.html">Macaroons</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Our Locations</h4>
+                    <p>Key West, FL & Nashville, TN</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mattheessen's. All rights reserved. <a href="privacy.html" style="color: rgba(255,255,255,0.6); margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
