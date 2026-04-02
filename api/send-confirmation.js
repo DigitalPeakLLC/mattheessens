@@ -67,8 +67,8 @@ TOTAL: $${Number(total).toFixed(2)}
 === END OF ORDER ===`;
 
     await resend.emails.send({
-      from: "orders@mattheessens.com",
-      to: "Mattsmailorder@gmail.com",
+      from: "onboarding@resend.dev",
+      to: "ben@lavavein.com",
       subject: `New Order from Mattheessen's - PayPal Order #${paypalOrderId}`,
       text: emailBody,
     });
