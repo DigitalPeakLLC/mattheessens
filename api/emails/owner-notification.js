@@ -17,7 +17,7 @@ export function buildOwnerEmail(data) {
         ${esc(item.name)}${desc}${qty}
       </td>
       <td style="padding:10px 12px;border-bottom:1px solid #F5EDE4;font-family:Georgia,serif;color:#2C1810;text-align:right;white-space:nowrap;">
-        $${Number(item.price).toFixed(2)}
+        $${(Number(item.price) * (Number(item.quantity) || 1)).toFixed(2)}
       </td>
     </tr>`;
   }).join("");

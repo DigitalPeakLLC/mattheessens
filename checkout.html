@@ -856,9 +856,7 @@
                         <div class="shipping-price">$2.00</div>
                     </div>
                 `;
-          if (!selectedShipping) {
-            selectShippingMethod("standard", 2.0);
-          }
+          selectShippingMethod("standard", 2.0);
           return;
         }
 
@@ -894,7 +892,7 @@
                 </div>
             `;
 
-        if (!selectedShipping) {
+        if (!selectedShipping || selectedShipping === "standard") {
           selectShippingMethod("priority", priorityRate);
         } else {
           selectShippingMethod(
@@ -1184,6 +1182,7 @@
         cart = cart.filter((item) => item.id !== id);
         localStorage.setItem("mattheessensCart", JSON.stringify(cart));
         loadOrderSummary();
+        if (cart.length > 0) calculateShipping();
         updateCartUI();
       }
 
@@ -1209,7 +1208,9 @@
           shippingMethod:
             selectedShipping === "priority"
               ? "USPS Priority Mail"
-              : "USPS Priority Mail Express",
+              : selectedShipping === "standard"
+                ? "Standard Shipping"
+                : "USPS Priority Mail Express",
           subtotal: orderSubtotal,
           shippingCost: orderShipping,
           total: orderTotal,
