@@ -623,7 +623,6 @@
       let orderSubtotal = 0;
       let orderShipping = 0;
       let orderTotal = 0;
-      let boxCount = 0;
       let selectedShipping = null;
       let paypalButtonRendered = false;
       let paypalRetryCount = 0;
@@ -764,7 +763,10 @@
           return;
         }
 
-        boxCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        const physicalBoxCount = cart.reduce((sum, item) =>
+          sum + (item.type === "gift-cert" ? 0 : item.quantity || 1), 0);
+        const giftCertCount = cart.reduce((sum, item) =>
+          sum + (item.type === "gift-cert" ? item.quantity || 1 : 0), 0);
         orderSubtotal = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
         container.innerHTML = cart
@@ -786,8 +788,10 @@
           .join("");
 
         subtotalEl.textContent = `$${orderSubtotal.toFixed(2)}`;
-        document.getElementById("boxCount").textContent =
-          `${boxCount} box${boxCount !== 1 ? "es" : ""}`;
+        document.getElementById("boxCount").textContent = [
+          physicalBoxCount > 0 ? `${physicalBoxCount} box${physicalBoxCount !== 1 ? "es" : ""}` : null,
+          giftCertCount > 0 ? `${giftCertCount} gift certificate${giftCertCount !== 1 ? "s" : ""}` : null,
+        ].filter(Boolean).join(", ");
         updateTotal();
       }
 
