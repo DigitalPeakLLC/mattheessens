@@ -151,14 +151,6 @@
       #paypal-button-container > div {
         min-height: 45px;
       }
-      .order-box-count {
-        background: var(--red);
-        color: white;
-        padding: 2px 8px;
-        border-radius: 12px;
-        font-size: 0.85rem;
-        margin-left: 10px;
-      }
       .checkout-item-actions {
         display: flex;
         align-items: center;
@@ -438,10 +430,7 @@
               id="shippingSection"
               style="display: none"
             >
-              <h3>
-                Shipping Method
-                <span id="boxCount" class="order-box-count"></span>
-              </h3>
+              <h3>Shipping Method</h3>
               <div id="shippingOptions"></div>
             </div>
 
@@ -623,7 +612,6 @@
       let orderSubtotal = 0;
       let orderShipping = 0;
       let orderTotal = 0;
-      let boxCount = 0;
       let selectedShipping = null;
       let paypalButtonRendered = false;
       let paypalRetryCount = 0;
@@ -764,7 +752,6 @@
           return;
         }
 
-        boxCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
         orderSubtotal = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
         container.innerHTML = cart
@@ -786,8 +773,6 @@
           .join("");
 
         subtotalEl.textContent = `$${orderSubtotal.toFixed(2)}`;
-        document.getElementById("boxCount").textContent =
-          `${boxCount} box${boxCount !== 1 ? "es" : ""}`;
         updateTotal();
       }
 
@@ -856,9 +841,7 @@
                         <div class="shipping-price">$2.00</div>
                     </div>
                 `;
-          if (!selectedShipping) {
-            selectShippingMethod("standard", 2.0);
-          }
+          selectShippingMethod("standard", 2.0);
           return;
         }
 
@@ -894,7 +877,7 @@
                 </div>
             `;
 
-        if (!selectedShipping) {
+        if (!selectedShipping || selectedShipping === "standard") {
           selectShippingMethod("priority", priorityRate);
         } else {
           selectShippingMethod(
@@ -1184,6 +1167,7 @@
         cart = cart.filter((item) => item.id !== id);
         localStorage.setItem("mattheessensCart", JSON.stringify(cart));
         loadOrderSummary();
+        if (cart.length > 0) calculateShipping();
         updateCartUI();
       }
 
@@ -1209,7 +1193,9 @@
           shippingMethod:
             selectedShipping === "priority"
               ? "USPS Priority Mail"
-              : "USPS Priority Mail Express",
+              : selectedShipping === "standard"
+                ? "Standard Shipping"
+                : "USPS Priority Mail Express",
           subtotal: orderSubtotal,
           shippingCost: orderShipping,
           total: orderTotal,
