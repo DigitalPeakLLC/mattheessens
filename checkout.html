@@ -765,7 +765,7 @@
         }
 
         boxCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-        orderSubtotal = cart.reduce((sum, item) => sum + item.price, 0);
+        orderSubtotal = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
         container.innerHTML = cart
           .map(
@@ -774,9 +774,10 @@
                     <div class="checkout-item-info">
                         <span class="checkout-item-name">${item.name}</span>
                         ${item.description ? `<span class="checkout-item-desc">${item.description}</span>` : ""}
+                        ${(item.quantity || 1) > 1 ? `<span class="checkout-item-desc">Qty: ${item.quantity}</span>` : ""}
                     </div>
                     <div class="checkout-item-actions">
-                        <span class="checkout-item-price">$${item.price.toFixed(2)}</span>
+                        <span class="checkout-item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</span>
                         <button onclick="removeFromCart(${item.id})" class="remove-btn" title="Remove">×</button>
                     </div>
                 </div>
