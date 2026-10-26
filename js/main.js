@@ -302,7 +302,7 @@ function updateCartUI() {
                         ${item.quantity > 1 ? `<p>Qty: ${item.quantity}</p>` : ''}
                     </div>
                     <div class="cart-item-actions">
-                        <span class="cart-item-price">$${item.price.toFixed(2)}</span>
+                        <span class="cart-item-price">$${(item.price * (item.quantity || 1)).toFixed(2)}</span>
                         <button onclick="removeFromCart(${item.id})" class="remove-btn">×</button>
                     </div>
                 </div>
@@ -311,7 +311,7 @@ function updateCartUI() {
     }
     
     // Update total
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const total = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
     if (cartTotal) cartTotal.textContent = `$${total.toFixed(2)}`;
 
     const checkoutBtn = document.querySelector('.cart-footer .btn-full');
