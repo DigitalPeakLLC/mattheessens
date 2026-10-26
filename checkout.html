@@ -151,14 +151,6 @@
       #paypal-button-container > div {
         min-height: 45px;
       }
-      .order-box-count {
-        background: var(--red);
-        color: white;
-        padding: 2px 8px;
-        border-radius: 12px;
-        font-size: 0.85rem;
-        margin-left: 10px;
-      }
       .checkout-item-actions {
         display: flex;
         align-items: center;
@@ -438,10 +430,7 @@
               id="shippingSection"
               style="display: none"
             >
-              <h3>
-                Shipping Method
-                <span id="boxCount" class="order-box-count"></span>
-              </h3>
+              <h3>Shipping Method</h3>
               <div id="shippingOptions"></div>
             </div>
 
@@ -763,10 +752,6 @@
           return;
         }
 
-        const physicalBoxCount = cart.reduce((sum, item) =>
-          sum + (item.type === "gift-cert" ? 0 : item.quantity || 1), 0);
-        const giftCertCount = cart.reduce((sum, item) =>
-          sum + (item.type === "gift-cert" ? item.quantity || 1 : 0), 0);
         orderSubtotal = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
 
         container.innerHTML = cart
@@ -788,10 +773,6 @@
           .join("");
 
         subtotalEl.textContent = `$${orderSubtotal.toFixed(2)}`;
-        document.getElementById("boxCount").textContent = [
-          physicalBoxCount > 0 ? `${physicalBoxCount} box${physicalBoxCount !== 1 ? "es" : ""}` : null,
-          giftCertCount > 0 ? `${giftCertCount} gift certificate${giftCertCount !== 1 ? "s" : ""}` : null,
-        ].filter(Boolean).join(", ");
         updateTotal();
       }
 
